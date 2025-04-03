@@ -1,0 +1,94 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GestaoClinicaApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(GestaoClinicaApplication.class, args);
+    }
+}
+
+/*
+Escopo do projeto
+Visão Geral do Projeto
+Desenvolver uma plataforma web intuitiva e eficiente, focada em gerenciar os processos
+administrativos e clínicos de clínicas médicas. A aplicação será desenvolvida em Java,
+garantindo segurança, robustez e escalabilidade para atender às demandas do setor de
+saúde.
+
+Objetivos do Projeto
+1. Simplificar o Agendamento de Consultas: Oferecer uma interface fácil de usar
+para pacientes agendarem e acompanharem consultas online.
+2. Gerenciamento de Pacientes e Prontuários: Permitir o armazenamento seguro
+de dados dos pacientes e históricos médicos.
+3. Administração Interna da Clínica: Fornecer ferramentas para gestão de
+profissionais, salas de consulta, faturamento e emissão de relatórios.
+4. Conformidade com Regulamentações: Atender às exigências de segurança de
+dados e privacidade (como a LGPD no Brasil).
+
+Funcionalidades Principais
+- Cadastro de Pacientes e Médicos: Formulários para criar, editar e visualizar
+informações.
+- Agenda Médica: Ferramenta de controle de horários para médicos e pacientes.
+- Gerenciamento de Prontuários: Registro detalhado de consultas e
+diagnósticos.
+- Portal do Paciente: Área para acessar documentos, receitas e resultados de
+exames.
+- Integrações Externas: Conexão com sistemas de faturamento e convênios
+médicos.
+- Relatórios Personalizados: Geração de relatórios para análise de performance e
+controle administrativo.
+
+Tecnologias e Frameworks
+- Linguagem Principal: Java
+- Frameworks e Bibliotecas: Spring Boot (para back-end), Hibernate (para
+ORM), Thymeleaf ou Angular/React (para front-end).
+- Banco de Dados: MySQL ou PostgreSQL.
+- Segurança: Implementação de autenticação JWT e criptografia para dados
+sensíveis.
+- Hospedagem: AWS ou Microsoft Azure para escalabilidade e performance.
+
+Cronograma do Projeto
+1. Fase de Planejamento (1 mês): Definição de requisitos, criação de wireframes e
+especificações técnicas.
+2. Desenvolvimento (3 meses): Codificação do back-end, front-end e integração de
+sistemas.
+3. Testes e Validação (2 semanas): Testes de funcionalidade, segurança e
+usabilidade.
+4. Lançamento e Treinamento (2 semanas): Implantação do sistema e
+capacitação de funcionários.
+*/
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import javax.sql.DataSource;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+
+@Configuration
+public class DatabaseConfig {
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .url("jdbc:mysql://localhost:3306/gestao_clinica")
+                .username("root")
+                .password("senha")
+                .driverClassName("com.mysql.cj.jdbc.Driver")
+                .build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("com.projeto.clinica.model");
+        return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory.getObject());
+    }
+}
