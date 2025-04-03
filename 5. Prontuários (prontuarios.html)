@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prontuários</title>
+</head>
+<body>
+    <h2>Prontuários Médicos</h2>
+    <table>
+        <tr>
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Data</th>
+            <th>Diagnóstico</th>
+        </tr>
+        <!-- Dados dinâmicos serão inseridos aqui -->
+    </table>
+</body>
+</html>
